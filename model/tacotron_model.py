@@ -54,8 +54,8 @@ def get_tacotron_model(n_mels, r, k1, k2, nb_char_max,
     post_process_output = get_CBHG_post_process(mel_hat_last_frame,
                                                 k2)
 
-    z_hat = Dense(mag_time_length * (n_fft // 2))(post_process_output)
-    z_hat_ = Reshape((mag_time_length, (n_fft // 2)))(z_hat)
+    z_hat = Dense(mag_time_length * ((n_fft // 2)+1))(post_process_output)
+    z_hat_ = Reshape((mag_time_length, (n_fft // 2)+1))(z_hat)
 
     model = Model(inputs=[input_encoder, input_decoder],
                   outputs=[mel_hat_, z_hat_])
