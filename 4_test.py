@@ -1,4 +1,4 @@
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 from sklearn.externals import joblib
 from hparams import *
 from processing.proc_audio import from_spectro_to_waveform
@@ -18,18 +18,11 @@ def save_wav(wav, path, sr):
 	wavfile.write(path, sr, wav.astype(np.int16))
 
 
-
-metadata = pd.read_csv('data/LJSpeech-1.1/metadata.csv',
-                       dtype='object', quoting=3, sep='|',
-                       header=None)
-len_train = int(TRAIN_SET_RATIO * len(metadata))
-metadata_testing = metadata.iloc[len_train:]
-
 # load testing data
-decoder_input_testing = joblib.load('data/decoder_input_testing.pkl')
-mel_spectro_testing = joblib.load('data/mel_spectro_testing.pkl')
-spectro_testing = joblib.load('data/spectro_testing.pkl')
-text_input_testing = joblib.load('data/text_input_ml_testing.pkl')
+decoder_input_testing = joblib.load('out/decoder_input_testing.pkl')
+mel_spectro_testing = joblib.load('out/mel_spectro_testing.pkl')
+spectro_testing = joblib.load('out/spectro_testing.pkl')
+text_input_testing = joblib.load('out/label_testing.pkl')
 
 # load model
 saved_model = load_model('results/model.h5')
@@ -41,10 +34,6 @@ mag_pred = predictions[1]  # predicted mag spectrogram
 
 
 item_index = 0  # pick any index
-print('Selected item .wav filename: {}'.format(
-    metadata_testing.iloc[item_index][0]))
-print('Selected item transcript: {}'.format(
-    metadata_testing.iloc[item_index][1]))
 
 predicted_spectro_item = mag_pred[item_index]
 predicted_audio_item = from_spectro_to_waveform(predicted_spectro_item, N_FFT,
@@ -54,6 +43,6 @@ predicted_audio_item = from_spectro_to_waveform(predicted_spectro_item, N_FFT,
 
 import librosa.display
 plt.figure(figsize=(14, 5))
-save_wav(predicted_audio_item,'temp.wav',sr=SAMPLING_RATE)
+save_wav(predicted_audio_item,'./results/temp.wav',sr=SAMPLING_RATE)
 librosa.display.waveplot(predicted_audio_item, sr=SAMPLING_RATE)
 plt.show()
