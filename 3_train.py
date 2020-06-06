@@ -14,7 +14,7 @@ length_for_embeding = joblib.load('out/length_for_embeding.pkl')
 model = get_tacotron_model(N_MEL, r, K1, K2, NB_CHARS_MAX,
                            EMBEDDING_SIZE, MAX_MEL_TIME_LENGTH,
                            MAX_MAG_TIME_LENGTH, N_FFT,
-                           length_for_embeding)
+                           length_for_embeding+1)
 
 opt = Adam()
 model.compile(optimizer=opt,

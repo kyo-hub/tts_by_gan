@@ -24,7 +24,7 @@ def text_to_sequence(text):
     sequence.append(_symbol_to_id[s])
   if len(sequence)< (NB_CHARS_MAX-1):
     for i in range((NB_CHARS_MAX-1)-len(sequence)):
-        sequence.append(-1)
+        sequence.append(0)
   sequence.append(_symbol_to_id['~'])
   return sequence
 

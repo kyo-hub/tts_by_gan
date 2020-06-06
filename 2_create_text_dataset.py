@@ -31,7 +31,7 @@ def mk_label(in_dir, out_dir):
       index += 1
       set_label = set(sequence)
       diction.update(set_label)
-  length_for_embeding = len(diction)
+  length_for_embeding = max(diction)
   print(label)
   label = tf.constant(label)
   print(label.shape)
