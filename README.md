@@ -1,2 +1,1 @@
-# tts_by_gan
-My first project about TTS
+# Tacotron-2-keras (Without Wavenet vocoder)
