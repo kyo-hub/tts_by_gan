@@ -13,7 +13,7 @@ def preprocess_in(args):
   out_dir = os.path.join(args.base_dir, args.output)
   os.makedirs(out_dir, exist_ok=True)
   label,index,length_for_embeding, len_seq_list = mk_label(in_dir, out_dir)
-  label_training, label_testing test_list= split_label(label,index,len_seq_list)
+  label_training, label_testing, test_list= split_label(label,index,len_seq_list)
   save_label(label_training, label_testing, length_for_embeding, test_list)
   
 def mk_label(in_dir, out_dir):
@@ -46,7 +46,7 @@ def split_label(label,index, len_seq_list):
     test_list = len_seq_list[len_train:]
     return label_training, label_testing, test_list
 
-def save_label(label_training, label_testing, length_for_embeding):
+def save_label(label_training, label_testing, length_for_embeding, test_list):
     joblib.dump(label_training, 'out/label_training.pkl')
     joblib.dump(label_testing, 'out/label_testing.pkl')
     joblib.dump(length_for_embeding, 'out/length_for_embeding.pkl')
