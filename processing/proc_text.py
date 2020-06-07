@@ -22,11 +22,12 @@ def text_to_sequence(text):
     text = ''.join(list(hangul_to_jamo(text)))
   for s in text:
     sequence.append(_symbol_to_id[s])
+  len_seq = len(sequence)
   if len(sequence)< (NB_CHARS_MAX-1):
     for i in range((NB_CHARS_MAX-1)-len(sequence)):
         sequence.append(0)
   sequence.append(_symbol_to_id['~'])
-  return sequence
+  return sequence, len_seq
 
 
 

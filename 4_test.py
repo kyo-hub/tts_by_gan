@@ -23,17 +23,19 @@ decoder_input_testing = joblib.load('out/decoder_input_testing.pkl')
 mel_spectro_testing = joblib.load('out/mel_spectro_testing.pkl')
 spectro_testing = joblib.load('out/spectro_testing.pkl')
 text_input_testing = joblib.load('out/label_testing.pkl')
+test_list = joblib.load('out/test_list,pkl')
 
 # load model
 saved_model = load_model('results/model.h5')
 
-predictions = saved_model.predict([text_input_testing, decoder_input_testing])
+item_index = 0  # pick any index
+
+predictions = saved_model.predict([text_input_testing[:test_list[item_index:]], decoder_input_testing])
 
 mel_pred = predictions[0]  # predicted mel spectrogram
 mag_pred = predictions[1]  # predicted mag spectrogram
 
 
-item_index = 0  # pick any index
 
 predicted_spectro_item = mag_pred[item_index]
 predicted_audio_item = from_spectro_to_waveform(predicted_spectro_item, N_FFT,
